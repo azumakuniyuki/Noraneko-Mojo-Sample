@@ -1,8 +1,16 @@
 package Noraneko::Web;
 use Mojo::Base 'Mojolicious';
+use Path::Class;
 
 sub startup {
     my $self = shift;
+    my $home = new Path::Class::File(__FILE__);
+    my $root = $home->dir->resolve->absolute->parent->parent();
+
+    for my $e ( 'neko', 'auth' ) {
+        my $f = $root->stringify.'/etc/'.$e.'.conf';
+        $self->plugin( 'Config', { 'file' => $f } );
+    }
 
     my $r = $self->routes;
 
