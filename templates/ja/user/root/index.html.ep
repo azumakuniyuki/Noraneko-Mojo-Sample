@@ -1,4 +1,4 @@
 % layout 'ja/user/default';
-% title '市民のページ';
+% title '市民のページ | '.$v->{'name'};
 <h1>ニャー?</h1>
 
