@@ -1,0 +1,3 @@
+% layout 'ja/user/default';
+% title 'メンテナンス中 | '.$v->{'name'};
+<h1>メンテナンス中ですニャー</h1>
