@@ -1,0 +1,12 @@
+{
+    "site":  {
+        "maintenance": 0,
+        "copyright": "Copyright (C) 京都市役所ネコ課",
+        "ja": {
+            "name": "ネコの管理システム"
+        },
+        "en": {
+            "name": "Stray Cats Administration System"
+        }
+    }
+}
