@@ -11,13 +11,14 @@ sub startup {
     my $fail = 0;
 
     for my $e ( 'neko', 'auth' ) {
-        my $f = $root->stringify.'/etc/'.$e.'.conf';
+        my $f = $root->stringify.'/etc/'.$e.'.json';
 
         eval {
-            $conf->{ $e } = $self->plugin( 'Config', { 'file' => $f } );
+            $conf->{ $e } = $self->plugin( 'JSONConfig', { 'file' => $f } );
         };
         $conf->{ $e } ||= Noraneko::Config->$e;
         $fail = 1 if $@;
+        warn $@;
     }
 
     for my $e ( values %$conf ) {
@@ -26,7 +27,6 @@ sub startup {
         }
     }
     $self->defaults->{'config'}->{'site'}->{'maintenance'} = $fail;
-    $self->defaults->{'config'}->{'site'}->{'maintenance'} = 1;
 
     my $r = $self->routes;
 
@@ -37,6 +37,11 @@ sub startup {
         $ctrl = 'admin-maintenance#index';
         $r->route( '/:lang/maintenance', 'lang' => $lang )->to( $ctrl );
         $r->route( '/:lang/:any', 'lang' => $lang, 'any' => qr/.*/ )->to( $ctrl );
+        #for my $e ( 'admin', 'user', 'clinic', 'cat' ) {
+        #$ctrl = $e'-maintenance#index';
+        #$r->route( '/:lang/maintenance', 'lang' => $lang )->to( $ctrl );
+        #$r->route( '/:lang/'.$e.'/:any', 'any' => qr/.*/ )->to( $ctrl );
+        #}
     }
 
     $r->route( '/:lang/user/index', 'lang' => $lang )->to( 'user-root#index' );
